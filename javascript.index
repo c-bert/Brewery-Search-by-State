@@ -10,11 +10,13 @@ function getAPIData(searchState, callback){
 }
 
 function displayResults(APIData){
-console.log("this is API data returned " + APIData);
+console.log("this is API data returned " + JSON.stringify(APIData));
 for (let i=0; i<APIData.length; i++){
     const breweryName = APIData[i].name;
+    const breweryCity= APIData[i].city;
+    const breweryState = APIData[i].state;
     const breweryWebsite = APIData[i].website_url;
-    $('.js-search-results').append(`<h1>${breweryName}</h2><p><a href=${breweryWebsite}>Brewery Website</a></p>`);
+    $('.js-search-results').append(`<h1>${breweryName}</h2><p>In ${breweryCity}, ${breweryState}</p><p><a href=${breweryWebsite}>Brewery Website</a></p>`);
 }
 }
 
