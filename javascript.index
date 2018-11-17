@@ -1,0 +1,36 @@
+'use strict';
+URL = "https://api.openbrewerydb.org/breweries?by_state=";
+
+function getAPIData(searchState, callback){
+    const query = {
+        by_state: `${searchState}`
+    }
+    console.log(query);
+    $.getJSON(URL, query, callback);
+}
+
+function displayResults(APIData){
+console.log("this is API data returned " + APIData);
+for (let i=0; i<APIData.length; i++){
+    const breweryName = APIData[i].name;
+    const breweryWebsite = APIData[i].website_url;
+    $('.js-search-results').append(`<h1>${breweryName}</h2><p><a href=${breweryWebsite}>Brewery Website</a></p>`);
+}
+}
+
+function watchSubmit(){
+//create an event listener for the form
+$('.js-search-form').submit(event => {
+    event.preventDefault();
+    const searchValue = $('.js-query').val();
+    $('.js-query').val("");
+    if (searchValue === "") {
+        return $('#error').append(`<h2> Give us something to search!</h2>`)
+    }
+    else {
+        getAPIData(searchValue, displayResults);
+    }
+});
+// alert("watch submit!")
+}
+$(watchSubmit);
